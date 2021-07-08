@@ -138,7 +138,7 @@ class CVDD(Model):
             C = self._context_vectors.squeeze(0)
             eye = torch.eye(num_heads).to(C.device)
             penalty = ((C @ C.T - eye) ** 2).mean()
-            loss += self._lambda + penalty
+            loss += self._lambda * penalty
 
         # Shape: (batch_size, )
         anomaly_scores = distances.mean(-1)
