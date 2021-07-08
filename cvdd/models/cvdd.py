@@ -124,7 +124,7 @@ class CVDD(Model):
             batch_size, num_heads
         )
         # Shape: (batch_size, num_heads)
-        sigmas = (self._alpha * distances).softmax(1)
+        sigmas = (-self._alpha * distances).softmax(1)
 
         # Shape: (batch_size, )
         batched_loss = (sigmas * distances).sum(1)
