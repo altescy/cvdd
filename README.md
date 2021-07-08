@@ -5,3 +5,11 @@ CVDD: Context Vector Data Description
 [![License](https://img.shields.io/github/license/altescy/cvdd)](https://github.com/altescy/cvdd/blob/master/LICENSE)
 
 This repository provides AllenNLP implementation of [Context Vector Data Description (CVDD)](https://github.com/lukasruff/CVDD-PyTorch).
+
+```
+❯ git clone https://github.com/altescy/cvdd.git
+❯ cd cvdd
+❯ poetry install
+❯ make datasets
+❯ poetry run train-with-mlflow configs/cvdd_20newsgroups.jsonnet
+```
