@@ -32,6 +32,6 @@ class CosineDistance(Distance):
             + tiny_value_of_dtype(target.dtype)
         )
         # Shape: (batch_size, )
-        distances = (source_norm * target_norm).sum(-1)
-        distances = 0.5 * (1 - distances)
+        similarity = (source_norm * target_norm).sum(-1)
+        distances = 0.5 * (1 - similarity)
         return cast(torch.Tensor, distances)
