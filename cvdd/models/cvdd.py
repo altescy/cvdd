@@ -22,7 +22,8 @@ class CVDD(Model):
         context_encoder: Seq2SeqEncoder,
         attention_encoder: Seq2SeqEncoder,
         distance: Optional[Distance] = None,
-        alpha: float = 0.0,
+        distance_weight: float = 0.0,
+        context_regularization: float = 1.0,
         dropout: float = 0.0,
         namespace: str = "tokens",
         label_namespace: str = "labels",
@@ -36,13 +37,20 @@ class CVDD(Model):
         self._attention_encoder = attention_encoder
         self._distance = TimeDistributed(distance or CosineDistance())  # type: ignore
 
-        self._alpha = alpha
+        self._alpha = distance_weight
+        self._lambda = context_regularization
 
         self._context_vectors = torch.nn.parameter.Parameter(
-            torch.FloatTensor(
-                1,
-                self._attention_encoder.get_output_dim(),
-                self._context_encoder.get_input_dim(),
+            (
+                (
+                    torch.rand(
+                        1,
+                        self._attention_encoder.get_output_dim(),
+                        self._context_encoder.get_input_dim(),
+                    )
+                    - 0.5
+                )
+                * 2
             ),
             requires_grad=True,
         )
@@ -104,6 +112,12 @@ class CVDD(Model):
         sigmas = (self._alpha * distances).softmax(1)
 
         loss = (sigmas * distances).sum(1).mean()
+
+        if self._lambda:
+            C = self._context_vectors.squeeze(0)
+            eye = torch.eye(num_heads).to(C.device)
+            penalty = ((C @ C.T - eye) ** 2).mean()
+            loss += self._lambda + penalty
 
         # Shape: (batch_size, )
         anomaly_scores = distances.mean(-1)
