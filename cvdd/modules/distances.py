@@ -23,11 +23,13 @@ class CosineDistance(Distance):
     ) -> torch.Tensor:
         # Shape: (batch_size, embedding_dim)
         source_norm = source / (
-            source.norm(p=2, dim=-1, keepdim=True) + tiny_value_of_dtype(source.dtype)  # type: ignore
+            source.norm(p=2, dim=-1, keepdim=True)  # type: ignore
+            + tiny_value_of_dtype(source.dtype)
         )
         # Shape: (batch_size, embedding_dim)
         target_norm = target / (
-            target.norm(p=2, dim=-1, keepdim=True) + tiny_value_of_dtype(target.dtype)  # type: ignore
+            target.norm(p=2, dim=-1, keepdim=True)  # type: ignore
+            + tiny_value_of_dtype(target.dtype)
         )
         # Shape: (batch_size, )
         distances = (source_norm * target_norm).sum(-1)
