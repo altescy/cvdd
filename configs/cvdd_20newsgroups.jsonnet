@@ -1,5 +1,4 @@
 local embedding_dim = 300;
-
 {
   dataset_reader: {
     type: 'text_classification_json',
@@ -41,8 +40,8 @@ local embedding_dim = 300;
   },
   data_loader: {
     type: 'simple',
-    batch_size: 128,
-    shuffle: false,
+    batch_size: 64,
+    shuffle: true,
   },
   trainer: {
     callbacks: ['mlflow'],
@@ -50,10 +49,15 @@ local embedding_dim = 300;
       type: 'adam',
       lr: 0.01,
     },
+    learning_rate_scheduler: {
+      type: 'step',
+      step_size: 40,
+      gamma: 0.1,
+    },
     validation_metric: '+auc',
-    num_epochs: 10,
+    num_epochs: 100,
     grad_norm: 10.0,
-    patience: 5,
+    patience: 10,
     cuda_device: -1,
   },
 }
