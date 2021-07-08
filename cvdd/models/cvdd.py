@@ -9,8 +9,7 @@ from allennlp.modules.seq2seq_encoders import Seq2SeqEncoder
 from allennlp.modules.time_distributed import TimeDistributed
 from allennlp.nn import InitializerApplicator, util
 from allennlp.training.metrics import Auc
-
-from cvdd.modules.distances import CosineDistance, Distance
+from xallennlp.modules.distances import CosineDistance, Distance
 
 
 @Model.register("cvdd")
