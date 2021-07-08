@@ -86,7 +86,7 @@ class OneClassClassification(DatasetReader):
 
         if label is not None:
             label_field = LabelField(label, label_namespace=self._label_namespace)
-            fields["labels"] = label_field
+            fields["label"] = label_field
             metadata["label"] = label
 
         fields["metadata"] = MetadataField(metadata)
