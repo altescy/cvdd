@@ -10,8 +10,7 @@ MODULE           := colt
 datasets: $(20NEWSGROUPS_DATASET)
 
 $(20NEWSGROUPS_DATASET):
-	$(PWD)/scripts/20newsgroups/download.sh
-	PYTHONPATH=$(PWD) $(PYTHON) scripts/20newsgroups/split_dataset.py data/raw/20_Newsgroups data/20newsgroups
+	PYTHONPATH=$(PWD) $(PYTHON) scripts/download_20newsgroups.py $(20NEWSGROUPS_DATASET) --remove headers --remove footers --remove quotes
 
 .PHONY: lint
 lint:
