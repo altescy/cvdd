@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Optional, cast
 
 import torch
+from allennlp.common.checks import check_dimensions_match
 from allennlp.data import TextFieldTensors, Vocabulary
 from allennlp.models import Model
 from allennlp.modules import TextFieldEmbedder
@@ -31,6 +32,19 @@ class CVDD(Model):
         initializer: Optional[InitializerApplicator] = None,
         **kwargs: Any,
     ) -> None:
+        check_dimensions_match(
+            text_field_embedder.get_output_dim(),
+            context_encoder.get_input_dim(),
+            "text_field_embedder output dim",
+            "context_encoder input dim",
+        )
+        check_dimensions_match(
+            context_encoder.get_output_dim(),
+            attention_encoder.get_input_dim(),
+            "context_encoder output dim",
+            "attention_encoder input dim",
+        )
+
         super().__init__(vocab, **kwargs)
         self._anomaly_label = anomaly_label
         self._text_field_embbedder = text_field_embedder
@@ -87,7 +101,7 @@ class CVDD(Model):
         batch_size, _, encoding_dim = encodings.size()
 
         # Shape: (batch_size, max_length, num_heads)
-        attentions = self._attention_encoder(embeddings, mask)
+        attentions = self._attention_encoder(encodings, mask)
         attentions = util.masked_softmax(
             attentions,
             mask=cast(torch.BoolTensor, mask.unsqueeze(-1)),
