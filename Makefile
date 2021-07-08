@@ -4,6 +4,14 @@ PYTEST           := poetry run pytest
 PYSEN            := poetry run pysen
 MODULE           := colt
 
+20NEWSGROUPS_DATASET := data/20newsgroups
+
+.PHONY: datasets
+datasets: $(20NEWSGROUPS_DATASET)
+
+$(20NEWSGROUPS_DATASET):
+	$(PWD)/scripts/20newsgroups/download.sh
+	PYTHONPATH=$(PWD) $(PYTHON) scripts/20newsgroups/split_dataset.py data/raw/20_Newsgroups data/20newsgroups
 
 .PHONY: lint
 lint:
