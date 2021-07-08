@@ -24,6 +24,7 @@ class CVDD(Model):
         distance: Optional[Distance] = None,
         distance_weight: float = 0.0,
         context_regularization: float = 1.0,
+        train_without_anomaly: bool = True,
         dropout: float = 0.0,
         namespace: str = "tokens",
         label_namespace: str = "labels",
@@ -39,6 +40,7 @@ class CVDD(Model):
 
         self._alpha = distance_weight
         self._lambda = context_regularization
+        self._train_without_anomaly = train_without_anomaly
 
         self._context_vectors = torch.nn.parameter.Parameter(
             (
@@ -111,7 +113,13 @@ class CVDD(Model):
         # Shape: (batch_size, num_heads)
         sigmas = (self._alpha * distances).softmax(1)
 
-        loss = (sigmas * distances).sum(1).mean()
+        # Shape: (batch_size, )
+        batched_loss = (sigmas * distances).sum(1)
+        if self._train_without_anomaly and label is not None:
+            anomaly_mask = cast(torch.BoolTensor, label != self._anomaly_label_index)
+            loss = util.masked_mean(batched_loss, anomaly_mask, dim=0)
+        else:
+            loss = batched_loss.mean()
 
         if self._lambda:
             C = self._context_vectors.squeeze(0)
