@@ -2752,7 +2752,7 @@ spacy = "^3.0.6"
 type = "git"
 url = "https://github.com/altescy/xallennlp"
 reference = "master"
-resolved_reference = "3d6196e44df3776dce04898beeb9ab1038a61a8c"
+resolved_reference = "b65a768988faf476b4e69bd29e80e6fdec834bfd"
 
 [[package]]
 name = "zc.lockfile"
