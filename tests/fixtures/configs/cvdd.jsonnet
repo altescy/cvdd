@@ -21,8 +21,14 @@
       input_dim: 10,
     },
     attention_encoder: {
-      type: 'pass_through',
-      input_dim: 10,
+      type: 'feedforward',
+      feedforward: {
+        input_dim: 10,
+        num_layers: 2,
+        hidden_dims: [10, 3],
+        activations: ['tanh', 'linear'],
+        biases: false,
+      },
     },
     distance: 'cosine',
   },

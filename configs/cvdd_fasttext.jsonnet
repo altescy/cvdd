@@ -43,6 +43,7 @@ local embedding_dim = 300;
         num_layers: 2,
         hidden_dims: [150, 5],
         activations: ['tanh', 'linear'],
+        biases: false,
       },
     },
     distance: 'cosine',
