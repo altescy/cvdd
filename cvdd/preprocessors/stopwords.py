@@ -13,7 +13,7 @@ class Stopwords(Preprocessor[str, str]):  # type: ignore[misc]
         tokenizer: Optional[Tokenizer] = None,
     ) -> None:
         super().__init__()
-        nltk.download()
+        nltk.download("stopwords")
         self._stopwords = set(stopwords or nltk.corpus.stopwords.words("english"))
         self._tokenizer = tokenizer or WhitespaceTokenizer()
 
