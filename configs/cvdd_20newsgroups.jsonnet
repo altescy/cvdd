@@ -12,7 +12,10 @@ local embedding_dim = 300;
       },
     },
     preprocessors: {
-      text: 'lowercase',
+      text: {
+        type: 'pipeline',
+        preprocessors: ['lowercase', 'stopwords'],
+      },
     },
   },
   train_data_path: 'data/20newsgroups/train.jsonl',
