@@ -1,12 +1,18 @@
 local embedding_dim = 300;
 {
   dataset_reader: {
-    type: 'text_classification_json',
-    token_indexers: {
-      tokens: {
-        type: 'fasttext',
-        pretrained_filename: 'https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.en.300.bin.gz',
+    type: 'preprocess',
+    base_reader: {
+      type: 'text_classification_json',
+      token_indexers: {
+        tokens: {
+          type: 'fasttext',
+          pretrained_filename: 'https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.en.300.bin.gz',
+        },
       },
+    },
+    preprocessors: {
+      text: 'lowercase',
     },
   },
   train_data_path: 'data/20newsgroups/train.jsonl',
@@ -32,7 +38,7 @@ local embedding_dim = 300;
       feedforward: {
         input_dim: embedding_dim,
         num_layers: 2,
-        hidden_dims: [100, 5],
+        hidden_dims: [150, 5],
         activations: ['tanh', 'linear'],
       },
     },

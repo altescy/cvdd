@@ -7,7 +7,7 @@ authors = ["Yasuhiro Yamaguchi <yasuhiro-yamaguchi@cookpad.jp>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 allennlp = "^2.5.0"
-xallennlp = {git = "https://github.com/altescy/xallennlp"}
+xallennlp = {git = "https://github.com/altescy/xallennlp.git"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
