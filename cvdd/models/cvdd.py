@@ -148,7 +148,6 @@ class CVDD(Model):
         output_dict: Dict[str, torch.Tensor] = {}
         output_dict["loss"] = loss
         output_dict["anomaly_scores"] = anomaly_scores
-        output_dict["token_ids"] = util.get_token_ids_from_text_field_tensors(tokens)
 
         if label is not None:
             binary_label = (label == self._anomaly_label_index).long()
@@ -159,17 +158,6 @@ class CVDD(Model):
     def make_output_human_readable(
         self, output_dict: Dict[str, torch.Tensor]
     ) -> Dict[str, torch.Tensor]:
-        tokens: List[List[str]] = []
-        for instance_tokens in output_dict["token_ids"]:
-            tokens.append(
-                [
-                    self.vocab.get_token_from_index(
-                        int(token_id.item()), namespace=self._namespace
-                    )
-                    for token_id in instance_tokens
-                ]
-            )
-        output_dict["tokens"] = tokens  # type: ignore
         return output_dict
 
     def get_metrics(self, reset: bool = False) -> Dict[str, float]:
