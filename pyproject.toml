@@ -7,7 +7,7 @@ authors = ["altescy <altescy@fastmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 allennlp = "^2.5.0"
-xallennlp = {git = "https://github.com/altescy/xallennlp.git"}
+xallennlp = {git = "https://github.com/altescy/xallennlp.git", rev = "v0.1.0"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

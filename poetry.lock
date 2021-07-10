@@ -2751,8 +2751,8 @@ spacy = "^3.0.6"
 [package.source]
 type = "git"
 url = "https://github.com/altescy/xallennlp.git"
-reference = "master"
-resolved_reference = "7098f14007bfd481dda5895081515a919c197cd7"
+reference = "v0.1.0"
+resolved_reference = "f892552edc1128a2c36a805696ad2cac8b34f7e4"
 
 [[package]]
 name = "zc.lockfile"
@@ -2768,7 +2768,7 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "9824f10f35071f665322f67b4455d7595a2185d32a6ad030fd1264ca53b646e3"
+content-hash = "b5d1d8c3fb76784e75d8dcc53819b774ad929ab3b72fd67f1629b5f75e34f5cb"
 
 [metadata.files]
 alembic = [
