@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from allennlp.common.util import JsonDict
 from allennlp.data import Instance
@@ -16,13 +16,14 @@ class AnomarlyDetector(Predictor):
         model: Model,
         dataset_reader: DatasetReader,
         frozen: bool = True,
-        threshold: float = 0.5,
+        threshold: Optional[float] = None,
     ) -> None:
         super().__init__(model, dataset_reader, frozen)
         self._threshold = threshold
 
     def detect_anomaly(self, json_dict: JsonDict) -> JsonDict:
-        json_dict["anomaly"] = json_dict["anomaly_scores"] > self._threshold
+        if self._threshold is not None:
+            json_dict["anomaly"] = json_dict["anomaly_scores"] > self._threshold
         return json_dict
 
     def predict_instance(self, instance: Instance) -> JsonDict:
