@@ -2,7 +2,7 @@
 name = "cvdd"
 version = "0.1.0"
 description = ""
-authors = ["Yasuhiro Yamaguchi <yasuhiro-yamaguchi@cookpad.jp>"]
+authors = ["altescy <altescy@fastmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
