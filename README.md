@@ -3,6 +3,7 @@ CVDD: Context Vector Data Description
 
 [![Actions Status](https://github.com/altescy/cvdd/workflows/CI/badge.svg)](https://github.com/altescy/cvdd/actions?query=workflow%3ACI)
 [![License](https://img.shields.io/github/license/altescy/cvdd)](https://github.com/altescy/cvdd/blob/master/LICENSE)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/altescy/cvdd)](https://github.com/altescy/cvdd/)
 
 This repository provides AllenNLP implementation of [Context Vector Data Description (CVDD)](https://github.com/lukasruff/CVDD-PyTorch).
 
