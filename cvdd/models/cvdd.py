@@ -14,6 +14,8 @@ from xallennlp.modules.distances import CosineDistance, Distance
 
 @Model.register("cvdd")
 class CVDD(Model):
+    default_predictor = "anomaly_detector"
+
     def __init__(
         self,
         vocab: Vocabulary,
@@ -145,7 +147,7 @@ class CVDD(Model):
 
         output_dict: Dict[str, torch.Tensor] = {}
         output_dict["loss"] = loss
-        output_dict["anomaly_score"] = anomaly_scores
+        output_dict["anomaly_scores"] = anomaly_scores
         output_dict["token_ids"] = util.get_token_ids_from_text_field_tensors(tokens)
 
         if label is not None:
