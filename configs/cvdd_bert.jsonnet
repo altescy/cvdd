@@ -1,12 +1,18 @@
 local embedding_dim = 768;
+local bert_model = 'bert-base-uncased';
 {
   dataset_reader: {
     type: 'text_classification_json',
+    tokenizer: {
+      type: 'pretrained_transformer',
+      model_name: bert_model,
+      max_length: 512,
+    },
     token_indexers: {
       bert: {
-        type: 'pretrained_transformer_mismatched',
+        type: 'pretrained_transformer',
         max_length: 512,
-        model_name: 'bert-base-uncased',
+        model_name: bert_model,
       },
     },
   },
@@ -16,12 +22,14 @@ local embedding_dim = 768;
   model: {
     type: 'cvdd',
     anomaly_label: 'comp',
+    primary_token_indexer: 'bert',
+    namespace: 'tags',
     text_field_embedder: {
       token_embedders: {
         bert: {
-          type: 'pretrained_transformer_mismatched',
+          type: 'pretrained_transformer',
           max_length: 512,
-          model_name: 'bert-base-uncased',
+          model_name: bert_model,
           train_parameters: false,
         },
       },
