@@ -6,7 +6,6 @@ local bert_model = 'bert-base-uncased';
     tokenizer: {
       type: 'pretrained_transformer',
       model_name: bert_model,
-      max_length: 512,
     },
     token_indexers: {
       bert: {
