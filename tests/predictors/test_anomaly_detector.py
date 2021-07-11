@@ -12,4 +12,5 @@ def test_anomaly_detector() -> None:
     outputs = predictor.predict_json(inputs)
 
     assert "anomaly" in outputs
+    assert "tokens" in outputs
     assert isinstance(outputs["anomaly"], bool)

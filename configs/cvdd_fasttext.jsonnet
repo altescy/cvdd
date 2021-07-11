@@ -5,7 +5,8 @@ local embedding_dim = 300;
     base_reader: {
       type: 'text_classification_json',
       token_indexers: {
-        tokens: {
+        tokens: 'single_id',
+        fasttext: {
           type: 'fasttext',
           pretrained_filename: 'https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.en.300.bin.gz',
         },
@@ -26,7 +27,8 @@ local embedding_dim = 300;
     anomaly_label: 'comp',
     text_field_embedder: {
       token_embedders: {
-        tokens: {
+        tokens: 'empty',
+        fasttext: {
           type: 'pass_through',
           hidden_dim: embedding_dim,
         },

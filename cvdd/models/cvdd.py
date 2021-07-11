@@ -30,6 +30,7 @@ class CVDD(Model):
         dropout: float = 0.0,
         namespace: str = "tokens",
         label_namespace: str = "labels",
+        primary_token_indexer: str = "tokens",
         initializer: Optional[InitializerApplicator] = None,
         **kwargs: Any,
     ) -> None:
@@ -74,6 +75,7 @@ class CVDD(Model):
 
         self._namespace = namespace
         self._label_namespace = label_namespace
+        self._primary_token_indexer = primary_token_indexer
         self._anomaly_label = anomaly_label
         self._anomaly_label_index = self.vocab.get_token_index(
             anomaly_label,
@@ -148,6 +150,10 @@ class CVDD(Model):
         output_dict: Dict[str, torch.Tensor] = {}
         output_dict["loss"] = loss
         output_dict["anomaly_scores"] = anomaly_scores
+        if self._primary_token_indexer in tokens:
+            output_dict["token_ids"] = util.get_token_ids_from_text_field_tensors(
+                {self._primary_token_indexer: tokens[self._primary_token_indexer]}
+            )
 
         if label is not None:
             binary_label = (label == self._anomaly_label_index).long()
@@ -158,6 +164,19 @@ class CVDD(Model):
     def make_output_human_readable(
         self, output_dict: Dict[str, torch.Tensor]
     ) -> Dict[str, torch.Tensor]:
+        tokens: List[List[str]] = []
+        if "token_ids" in output_dict:
+            for instance_tokens in output_dict["token_ids"]:
+                tokens.append(
+                    [
+                        self.vocab.get_token_from_index(
+                            token_id.item(), namespace=self._namespace
+                        )
+                        for token_id in instance_tokens
+                    ]
+                )
+            output_dict["tokens"] = tokens  # type: ignore
+            del output_dict["token_ids"]
         return output_dict
 
     def get_metrics(self, reset: bool = False) -> Dict[str, float]:

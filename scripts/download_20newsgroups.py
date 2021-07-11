@@ -58,6 +58,10 @@ def main() -> None:
         random_state=args.random_state,
     )
 
+    train = [x for x in train if x["text"]]
+    validation = [x for x in validation if x["text"]]
+    test = [x for x in test if x["text"]]
+
     train_filename = args.output_dir / args.train_filename
     with open(train_filename, "w") as fp:
         fp.write("\n".join(json.dumps(x) for x in train))
