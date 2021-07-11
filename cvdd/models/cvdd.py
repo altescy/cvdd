@@ -80,7 +80,7 @@ class CVDD(Model):
             label_namespace,
         )
 
-        self._auc = Auc(self._anomaly_label_index)  # type: ignore
+        self._auc = Auc()  # type: ignore
 
         initializer = initializer or InitializerApplicator()
         initializer(self)
