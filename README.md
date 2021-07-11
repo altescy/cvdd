@@ -12,5 +12,5 @@ This repository provides AllenNLP implementation of [Context Vector Data Descrip
 ❯ cd cvdd
 ❯ poetry install
 ❯ make datasets
-❯ poetry run allennlp train-with-mlflow configs/cvdd_20newsgroups.jsonnet
+❯ poetry run allennlp train-with-mlflow configs/cvdd_fasttext.jsonnet
 ```
