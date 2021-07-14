@@ -9,6 +9,7 @@ local embedding_dim = 300;
         fasttext: {
           type: 'fasttext',
           pretrained_filename: 'https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.en.300.bin.gz',
+          normalize: false,
         },
       },
     },
